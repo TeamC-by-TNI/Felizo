@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# チーム開発プロジェクト
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Claude が手順書を作成してくれました。参考に clone してからブランチを切ってコーディングしていきましょう！
 
-## About Laravel
+## 環境構築手順
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1. 必要なソフトウェア
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+以下のソフトウェアが必要です：
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Docker Desktop
+-   Visual Studio Code
+-   VS Code 拡張機能：Dev Containers（作者: Microsoft）
 
-## Learning Laravel
+### 2. 初期セットアップ手順
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Mac 環境の場合
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Docker Desktop を起動する
+2. リポジトリをクローン
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone [リポジトリURL]
+```
 
-## Laravel Sponsors
+3. プロジェクトディレクトリに移動
+4. .env.example をコピーして.env を作成
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+5. VS Code でプロジェクトを開く
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+code .
+```
 
-## Contributing
+6. 右下に表示される「Reopen in Container」をクリック
+    - 表示されない場合：Command + Shift + P で「Dev Containers: Reopen in Container」を実行
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Windows 環境の場合
 
-## Code of Conduct
+1. Docker Desktop を起動する
+2. XAMPP の Apache が起動している場合は停止する
+3. リポジトリをクローン
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone [リポジトリURL]
+```
 
-## Security Vulnerabilities
+4. プロジェクトディレクトリに移動
+5. VS Code でプロジェクトを開く
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+code .
+```
 
-## License
+6. 右下に表示される「Reopen in Container」をクリック
+    - 表示されない場合：Ctrl + Shift + P で「Dev Containers: Reopen in Container」を実行
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. コンテナ起動後の設定
+
+Dev Container が起動したら、以下のコマンドを実行してください：
+
+```bash
+# アプリケーションキーの生成
+php artisan key:generate
+
+# データベースマイグレーション
+php artisan migrate
+```
+
+### 4. 動作確認
+
+以下の URL にアクセスして、正常に表示されることを確認してください：
+
+-   Laravel アプリケーション: http://localhost
+-   phpMyAdmin: http://localhost:8080
+
+## トラブルシューティング
+
+### よくある問題と解決方法
+
+1. ポートが既に使用されている場合
+
+    - DockerDesktop でコンテナを一度停止し、再度起動してください
+    - 他のアプリケーション（XAMPP 等）が同じポートを使用していないか確認してください
+
+2. Dev Container が起動しない場合
+
+    - Docker Desktop が起動しているか確認してください
+    - VS Code の Dev Containers 拡張機能がインストールされているか確認してください
+
+3. データベース接続エラーが発生する場合
+    - .env ファイルのデータベース設定を確認してください
+    - コンテナを再起動してみてください
+
+### エラーが解決しない場合
+
+GitHub で以下の情報と共に報告してください：
+
+1. 発生しているエラーメッセージ
+2. 実行した操作手順
+3. 使用している環境
+
+## コミット・プッシュ時の注意点
+
+-   `.env`ファイルは絶対にコミットしないように注意！
+-   `vendor`ディレクトリはコミットしないように注意！（gitignore 配下にデフォで入ってます）
+-   新しいパッケージをインストールした場合は、反映のため`composer.json`と`composer.lock`をコミットしてください
+-   （↑ この件についてはあとで深堀確認します！）
+
+## チーム開発ルール
+
+### ブランチ運用ルール
+
+1. メインブランチ
+
+    - `main`: プロダクションコード（直接プッシュ禁止）
+    - `develop`: 開発用メインブランチ（各機能ブランチのマージ先）
+
+2. 作業用ブランチ
+    - 命名規則: `feature/機能名`
+    - 例: `feature/login-page`, `feature/user-registration`
+
+### 作業の進め方
+
+1. 作業開始時
+
+    ```bash
+    # developブランチから最新をプル
+    git checkout develop
+    git pull origin develop
+
+    # 作業用ブランチを作成
+    git checkout -b feature/機能名
+    ```
+
+2. 作業中
+
+    - 小さな単位で頻繁にコミット
+    - 1 日 1 回以上はプッシュする
+
+3. プルリクエスト（PR）
+    - 機能が完成したら develop ブランチへ PR を作成
+    - PR のタイトルは「[機能名] 実装内容の要約」の形式
+    - レビュー後、承認されたらマージ
+
+### コミュニケーションルール
+
+1. 困ったことがあったらすぐに質問（1 時間以上悩まない）
+2. 遠慮しすぎない！誰も責めない！
