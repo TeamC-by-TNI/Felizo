@@ -30,13 +30,14 @@ git clone [リポジトリURL]
 cp .env.example .env
 ```
 
-※DB 接続情報を手動で以下のように書き換えお願いします！
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=sail
-DB_PASSWORD=password
+# ※DB 接続情報を手動で以下のように書き換えお願いします！
+
+-   DB_CONNECTION=mysql
+-   DB_HOST=mysql
+-   DB_PORT=3306
+-   DB_DATABASE=laravel
+-   DB_USERNAME=sail
+-   DB_PASSWORD=password
 
 5. VS Code でプロジェクトを開く
 
