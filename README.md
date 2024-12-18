@@ -65,10 +65,10 @@ Dev Container が起動したら、以下のコマンドを実行してくださ
 
 ```bash
 # アプリケーションキーの生成
-php artisan key:generate
+./vendor/bin/sail artisan key:generate
 
 # データベースマイグレーション
-php artisan migrate
+./vendor/bin/sail artisan migrate
 ```
 
 ### 4. 動作確認
