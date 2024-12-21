@@ -1,162 +1,119 @@
-# チーム開発プロジェクト
+# 📝 チーム開発用 Git/GitHub 作業手順
 
-Claude が手順書を作成してくれました。参考に clone してからブランチを切ってコーディングしていきましょう！
+このREADMEでは、Laravelプロジェクトでのチーム開発におけるGit/GitHubの基本的な作業手順を説明します。Windows・Mac環境に対応した内容です。
 
-## 環境構築手順
+---
 
-### 1. 必要なソフトウェア
+## 1. 開発ブランチから作業ブランチを作成する（作業初回のみ）
 
-以下のソフトウェアが必要です：
+作業を始める前に、必ず最新の`develop`ブランチから作業ブランチを作成しましょう。
 
--   Docker Desktop
--   Visual Studio Code
--   VS Code 拡張機能：Dev Containers（作者: Microsoft）
-
-### 2. 初期セットアップ手順
-
-#### Mac 環境の場合
-
-1. Docker Desktop を起動する
-2. リポジトリをクローン
-
-```bash
-git clone [リポジトリURL]
-```
-
-3. プロジェクトディレクトリに移動
-4. .env.example をコピーして.env を作成
-
-```bash
-cp .env.example .env
-```
-
-# ※DB 接続情報を手動で以下のように書き換えお願いします！
-
--   DB_CONNECTION=mysql
--   DB_HOST=mysql
--   DB_PORT=3306
--   DB_DATABASE=laravel
--   DB_USERNAME=sail
--   DB_PASSWORD=password
-
-5. VS Code でプロジェクトを開く
-
-```bash
-code .
-```
-
-6. 右下に表示される「Reopen in Container」をクリック
-    - 表示されない場合：Command + Shift + P で「Dev Containers: Reopen in Container」を実行
-
-#### Windows 環境の場合
-
-1. Docker Desktop を起動する
-2. XAMPP の Apache が起動している場合は停止する
-3. リポジトリをクローン
-
-```bash
-git clone [リポジトリURL]
-```
-
-4. プロジェクトディレクトリに移動
-5. VS Code でプロジェクトを開く
-
-```bash
-code .
-```
-
-6. 右下に表示される「Reopen in Container」をクリック
-    - 表示されない場合：Ctrl + Shift + P で「Dev Containers: Reopen in Container」を実行
-
-### 3. コンテナ起動後の設定
-
-Dev Container が起動したら、以下のコマンドを実行してください：
-
-```bash
-# アプリケーションキーの生成
-./vendor/bin/sail artisan key:generate
-
-# データベースマイグレーション
-./vendor/bin/sail artisan migrate
-```
-
-### 4. 動作確認
-
-以下の URL にアクセスして、正常に表示されることを確認してください：
-
--   Laravel アプリケーション: http://localhost
--   phpMyAdmin: http://localhost:8080
-
-## トラブルシューティング
-
-### よくある問題と解決方法
-
-1. ポートが既に使用されている場合
-
-    - DockerDesktop でコンテナを一度停止し、再度起動してください
-    - 他のアプリケーション（XAMPP 等）が同じポートを使用していないか確認してください
-
-2. Dev Container が起動しない場合
-
-    - Docker Desktop が起動しているか確認してください
-    - VS Code の Dev Containers 拡張機能がインストールされているか確認してください
-
-3. データベース接続エラーが発生する場合
-    - .env ファイルのデータベース設定を確認してください
-    - コンテナを再起動してみてください
-
-### エラーが解決しない場合
-
-GitHub で以下の情報と共に報告してください：
-
-1. 発生しているエラーメッセージ
-2. 実行した操作手順
-3. 使用している環境
-
-## コミット・プッシュ時の注意点
-
--   `.env`ファイルは絶対にコミットしないように注意！
--   `vendor`ディレクトリはコミットしないように注意！（gitignore 配下にデフォで入ってます）
--   新しいパッケージをインストールした場合は、反映のため`composer.json`と`composer.lock`をコミットしてください
--   （↑ この件についてはあとで深堀確認します！）
-
-## チーム開発ルール
-
-### ブランチ運用ルール
-
-1. メインブランチ
-
-    - `main`: プロダクションコード（直接プッシュ禁止）
-    - `develop`: 開発用メインブランチ（各機能ブランチのマージ先）
-
-2. 作業用ブランチ
-    - 命名規則: `feature/機能名`
-    - 例: `feature/login-page`, `feature/user-registration`
-
-### 作業の進め方
-
-1. 作業開始時
+1. **`develop`ブランチに移動し、最新版を取得する：**
 
     ```bash
-    # developブランチから最新をプル
     git checkout develop
     git pull origin develop
-
-    # 作業用ブランチを作成
-    git checkout -b feature/機能名
     ```
 
-2. 作業中
+2. **新しい作業ブランチを作成する：**
 
-    - 小さな単位で頻繁にコミット
-    - 1 日 1 回以上はプッシュする
+    ```bash
+    git checkout -b feature/作業内容
+    ```
 
-3. プルリクエスト（PR）
-    - 機能が完成したら develop ブランチへ PR を作成
-    - PR のタイトルは「[機能名] 実装内容の要約」の形式
-    - レビュー後、承認されたらマージ
+    例：`feature/index`や`feature/header`
 
-### コミュニケーションルール
+---
 
-1. 困ったことがあったらすぐに質問（1 時間以上悩まない）
-2. 遠慮しすぎない！誰も責めない！
+## 2. 作業を進める
+
+作業ブランチでコードを書き進めます。
+
+---
+
+## 3. 定期的に`develop`ブランチの最新状態を取り込む
+
+他のメンバーが`develop`に変更をマージした場合、自分の作業ブランチに定期的にその変更を反映しましょう。
+
+1. **作業中の変更をコミットまたはスタッシュする：**
+
+    - **変更をコミットする場合：**
+
+        ```bash
+        git add .
+        git commit -m "作業内容を一時保存"
+        ```
+
+    - **変更をスタッシュする場合：**
+
+        ```bash
+        git stash
+        ```
+
+2. **`develop`ブランチに移動し、最新版をpullする：**
+
+    ```bash
+    git checkout develop
+    git pull origin develop
+    ```
+
+3. **作業ブランチに戻り、`develop`の変更をマージする：**
+
+    ```bash
+    git checkout feature/作業内容
+    git merge develop
+    ```
+
+4. **スタッシュした変更を戻す（スタッシュした場合のみ）：**
+
+    ```bash
+    git stash pop
+    ```
+
+---
+
+## 4. 作業ブランチをGitHubにpushする
+
+作業が完了したら、ブランチをGitHubにpushします。
+
+    ```bash
+    git push origin feature/作業内容
+    ```
+---
+
+## 5. プルリクエストを作成する
+
+GitHub上でfeature/作業内容ブランチからdevelopブランチへのプルリクエスト（PR）を作成します。
+
+不安な場合は他のメンバーにコードレビューを依頼しましょう。遠慮なしで！
+
+---
+
+## 6. コードレビューとマージ
+レビューで指摘された点を修正する場合：
+
+    ```bash
+    git add .
+    git commit -m "レビュー内容を反映"
+    git push origin feature/作業内容
+    ```
+
+問題がなければ、プルリクエストをマージします。
+
+---
+
+## 7. 作業ブランチの削除
+マージが完了したら、作業ブランチを削除します。（最後の最後で大丈夫です！）
+
+```bash
+# ローカルブランチを削除
+git branch -d feature/作業内容
+
+# リモートブランチを削除
+git push origin --delete feature/作業内容
+```
+---
+
+## 補足：コンフリクトが発生した場合
+
+**マージ時にコンフリクトが発生したら、手動で修正してから再度コミットしましょう。**
