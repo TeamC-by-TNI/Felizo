@@ -1,5 +1,6 @@
 services:
     phpmyadmin:
+        platform: linux/amd64
         image: phpmyadmin/phpmyadmin
         links:
             - 'mysql:mysql'
