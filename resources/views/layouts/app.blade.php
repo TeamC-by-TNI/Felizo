@@ -18,6 +18,7 @@
     </header>
 
     <main>
+        <!-- ここは絶対に触らない！ -->
         @yield('content')
         <!-- Bladeテンプレートエンジン メモ
         @extends('layouts.app') - 共通レイアウトを継承
