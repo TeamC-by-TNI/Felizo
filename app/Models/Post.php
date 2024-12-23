@@ -9,4 +9,10 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+
+    // 追加💡
+    protected $fillable = [
+        'title',
+        'body',
+    ];
 }
