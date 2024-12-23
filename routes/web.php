@@ -60,27 +60,27 @@ Route::prefix('threads')->group(function () {
 
 // 💡各viewfileでいでっちが下記のコードを入力必要？とりあえずプルするのでいでっち確認後、こちら削除してOK
 
-// index.blade.php での詳細ページへのリンク
-<a href="{{ route('threads.show', $thread) }}">詳細を見る</a>
+// // index.blade.php での詳細ページへのリンク
+// <a href="{{ route('threads.show', $thread) }}">詳細を見る</a>
 
-// index.blade.php での新規作成ページへのリンク
-<a href="{{ route('threads.create') }}">新規スレッド作成</a>
+// // index.blade.php での新規作成ページへのリンク
+// <a href="{{ route('threads.create') }}">新規スレッド作成</a>
 
-// create.blade.php でのフォームのaction
-<form action="{{ route('threads.store') }}" method="POST">
-    @csrf
-    // フォームの内容
-</form>
+// // create.blade.php でのフォームのaction
+// <form action="{{ route('threads.store') }}" method="POST">
+//     @csrf
+//     // フォームの内容
+// </form>
 
-// コメント投稿フォーム
-<form action="{{ route('posts.store', $thread) }}" method="POST">
-    @csrf
-    <textarea name="content"></textarea>
-    <button type="submit">投稿</button>
-</form>
+// // コメント投稿フォーム
+// <form action="{{ route('posts.store', $thread) }}" method="POST">
+//     @csrf
+//     <textarea name="content"></textarea>
+//     <button type="submit">投稿</button>
+// </form>
 
-// スタンプボタン
-<form action="{{ route('stamps.store', $post) }}" method="POST">
-    @csrf
-    <button type="submit">👍</button>
-</form>
+// // スタンプボタン
+// <form action="{{ route('stamps.store', $post) }}" method="POST">
+//     @csrf
+//     <button type="submit">👍</button>
+// </form>
