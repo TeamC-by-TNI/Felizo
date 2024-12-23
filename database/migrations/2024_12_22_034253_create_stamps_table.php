@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('stamps', function (Blueprint $table) {
             $table->id();
+            // 2列追加💡
+            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $table->foreignId('stamp_type_id')->constrained('stamp_types')->cascadeOnDelete();
             $table->timestamps();
         });
     }

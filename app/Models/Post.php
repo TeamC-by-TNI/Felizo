@@ -17,4 +17,9 @@ class Post extends Model
     {
         return $this->belongsTo(Thread::class);
     }
+    
+    public function stamps()
+    {
+        return $this->hasMany(Stamp::class);
+    }
 }
