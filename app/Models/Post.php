@@ -11,8 +11,10 @@ class Post extends Model
     use HasFactory;
 
     // 追加💡
-    protected $fillable = [
-        'title',
-        'body',
-    ];
+    protected $fillable = ['thread_id', 'content', 'username', 'avatar'];
+    // 追加💡
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
+    }
 }
