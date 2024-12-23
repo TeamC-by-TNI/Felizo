@@ -13,6 +13,7 @@
 
         <div class="bg-white shadow rounded-lg p-6">
             <form action="{{ route('threads.store') }}" method="POST">
+            @csrf
                 <!-- タイトル入力 -->
                 <div class="mb-6">
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
