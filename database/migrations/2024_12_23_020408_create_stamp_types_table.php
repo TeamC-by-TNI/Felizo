@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('stamp_types', function (Blueprint $table) {
             $table->id();
+            // 2列追加💡
+            $table->string('name');
+            $table->string('icon_path')->nullable();
             $table->timestamps();
         });
     }

@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            // 追加💡
-            $table->string('title');
-            $table->text('body');
+            // 4列追加💡
+            $table->foreignId('thread_id')->constrained()->cascadeOnDelete();
+            $table->string('username');
+            $table->string('avatar');
+            $table->text('content');
             $table->timestamps();
         });
     }

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
+            // 2列追加💡
+            $table->string('title');
+            $table->string('description');
+            // $table->string('description');->nullable();Null値って許容して良いのか？
             $table->timestamps();
         });
     }

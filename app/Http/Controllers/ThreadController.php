@@ -13,6 +13,8 @@ class ThreadController extends Controller
     public function index()
     {
         //
+        $threads = Thread::all();
+        return view('threads.index', compact('threads'));
     }
 
     /**
@@ -21,6 +23,7 @@ class ThreadController extends Controller
     public function create()
     {
         //
+        return view('threads.create');
     }
 
     /**
@@ -28,7 +31,18 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // バリデーション
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        // 新しいスレッドを保存
+        $thread = Thread::create($validated);
+
+        // 作成したスレッドの詳細ページにリダイレクト
+        return redirect()->route('threads.show', $thread->id)
+            ->with('success', 'スレッドが作成されました。');
     }
 
     /**
@@ -37,6 +51,7 @@ class ThreadController extends Controller
     public function show(Thread $thread)
     {
         //
+        return view('threads.show', compact('thread'));
     }
 
     /**
@@ -45,6 +60,7 @@ class ThreadController extends Controller
     public function edit(Thread $thread)
     {
         //
+        return view('threads.edit', compact('thread'));
     }
 
     /**
@@ -52,7 +68,7 @@ class ThreadController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        //
+        //更新処理って必要だっけ？？とりあえず記述なし。
     }
 
     /**
@@ -61,5 +77,7 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+        $thread->delete();
+        return redirect()->route('threads.index')->with('success', 'スレッドが削除されました。');
     }
 }
