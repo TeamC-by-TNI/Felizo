@@ -10,19 +10,20 @@
 <div class="container mx-auto px-4 py-8">
     <!-- スレッドのヘッダー部分 -->
     <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <h1 class="text-3xl font-bold mb-2">スレッドタイトル</h1>
+        <h1 class="text-3xl font-bold mb-2">{{$thread->title}}</h1>
         <div class="flex items-center text-gray-500 text-sm mb-4">
             <span>投稿日時: 2024/12/21</span>
             <span class="mx-2">•</span>
             <span>投稿者: ユーザー名</span>
         </div>
-        <p class="text-gray-700">スレッドの説明文がここに表示されます</p>
+        <p class="text-gray-700">{{$thread->discription}}</p>
     </div>
 
     <!-- コメント投稿フォーム -->
     <div class="bg-white shadow rounded-lg p-6 mb-6">
         <h2 class="text-xl font-bold mb-4">コメントを投稿</h2>
-        <form action="#" method="POST">
+        <form action="{{ route('posts.store', $thread) }}" method="POST">
+        @csrf
             <div class="mb-4">
                 <textarea class="w-full border-gray-300 rounded-md shadow-sm" rows="3" placeholder="コメントを入力してください"></textarea>
             </div>
