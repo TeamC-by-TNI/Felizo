@@ -12,7 +12,7 @@
         <h1 class="text-2xl font-bold mb-6">新規スレッド作成</h1>
 
         <div class="bg-white shadow rounded-lg p-6">
-            <form action="#" method="POST">
+            <form action="{{ route('threads.store') }}" method="POST">
                 <!-- タイトル入力 -->
                 <div class="mb-6">
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
@@ -20,7 +20,7 @@
                     </label>
                     <input type="text" id="title" name="title" 
                            class="w-full border-gray-300 rounded-md shadow-sm" 
-                           placeholder="スレッドのタイトルを入力してください">
+                           placeholder="スレッドのタイトル">
                 </div>
 
                 <!-- 内容入力 -->
@@ -30,7 +30,7 @@
                     </label>
                     <textarea id="content" name="content" rows="5" 
                               class="w-full border-gray-300 rounded-md shadow-sm"
-                              placeholder="スレッドの内容を入力してください"></textarea>
+                              placeholder="スレッドの内容"></textarea>
                 </div>
 
                 <!-- 投稿ボタン -->
