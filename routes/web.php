@@ -21,3 +21,6 @@ Route::resource('threads', ThreadController::class);
 Route::resource('posts', PostController::class);
 Route::resource('stamps', StampController::class);
 // Route::resource('stamp_types', stamp_typesController::class);
+
+// 個別のThreadsでコメントをpostして保存
+Route::post('/threads/{thread}/posts', [PostController::class, 'store'])->name('posts.store');
