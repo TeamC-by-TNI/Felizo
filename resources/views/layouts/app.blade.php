@@ -19,10 +19,7 @@
 
     <main>
         @yield('content')
-        <!-- Bladeテンプレートエンジン メモ
-        @extends('layouts.app') - 共通レイアウトを継承
-        @section('content') - コンテンツ部分の定義
-        @yield('content') - コンテンツを表示する場所の指定 -->
+ 
     </main>
 
     <footer>
