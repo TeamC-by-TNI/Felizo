@@ -1,9 +1,5 @@
 <!-- resources/views/threads/create.blade.php -->
 @extends('layouts.app')
-        <!-- Bladeテンプレートエンジン メモ
-        @extends('layouts.app') - 共通レイアウトを継承
-        @section('content') - コンテンツ部分の定義
-        @yield('content') - コンテンツを表示する場所の指定 -->
 
 
 @section('content')
@@ -26,10 +22,10 @@
 
                 <!-- 内容入力 -->
                 <div class="mb-6">
-                    <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
                         内容
                     </label>
-                    <textarea id="content" name="content" rows="5" 
+                    <textarea id="description" name="description" rows="5" 
                               class="w-full border-gray-300 rounded-md shadow-sm"
                               placeholder="スレッドの内容"></textarea>
                 </div>
