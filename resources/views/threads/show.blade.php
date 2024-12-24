@@ -20,13 +20,13 @@
             <div class="mb-4">
                 <textarea 
                     id = "comment"
-                    name="description" 
-                    class="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 @error('description') border-red-500 @enderror" 
+                    name="content" 
+                    class="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 @error('content') border-red-500 @enderror" 
                     rows="3" 
                     placeholder="コメントを入力してください"
-                >{{ old('description') }}</textarea>
+                >{{ old('content') }}</textarea>
                 <!-- ↑old('description')で送信失敗時には内容を保持する -->
-                @error('description')
+                @error('content')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -60,7 +60,7 @@
                             </button>
                         </form>
                     </div>
-                    <p class="text-gray-700">{{ $post->description }}</p>
+                    <p class="text-gray-700">{{ $post->content }}</p>
                 </div>
             @endforeach
         @else
