@@ -13,26 +13,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\StampController;
 use App\Http\Controllers\ThreadController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', function () {
-    return view('threads/index');
-});
+Route::get('/',[ThreadController::class, 'index'];
+);
 
 // 追加💡スレッド関連のリソースルート
 Route::resource('threads', ThreadController::class);
-
-// 投稿関連のルート
-Route::prefix('threads/{thread}')->group(function () {
-    // コメント投稿
-    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
-    
-    // コメント削除
-    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-
-    // スタンプ関連
-    Route::post('posts/{post}/stamps', [StampController::class, 'store'])->name('stamps.store');
-    Route::delete('posts/{post}/stamps/{stamp}', [StampController::class, 'destroy'])->name('stamps.destroy');
-});
+Route::resource('posts', postsController::class);
+Route::resource('stamps', stampsController::class);
+// Route::resource('stamp_types', stamp_typesController::class);
