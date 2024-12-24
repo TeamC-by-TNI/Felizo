@@ -30,7 +30,7 @@
                 @enderror
             </div>
             <div class="text-right">
-            <button type="submit" id="submitButton" class="font-bold py-2 px-6 rounded transition-colors 
+            <button type="submit" id="submitButton2" class="font-bold py-2 px-6 rounded transition-colors 
                         duration-200 bg-gray-400 text-white cursor-not-allowed" disabled>
                     投稿する
                     </button>
