@@ -24,3 +24,6 @@ Route::resource('stamps', StampController::class);
 
 // 個別のThreadsでコメントをpostして保存
 Route::post('/threads/{thread}/posts', [PostController::class, 'store'])->name('posts.store');
+
+//🐶検索機能のため追加
+Route::get('/search', [ThreadController::class, 'search'])->name('threads.search');
