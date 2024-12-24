@@ -22,7 +22,7 @@
             <p class="text-gray-600 mt-2">スレッドの説明文がここに表示されます</p>
             <div class="mt-4 flex justify-between items-center">
                 <span class="text-sm text-gray-500">投稿日時: 2024/12/21</span>
-                <a href="#" class="text-blue-500 hover:text-blue-700">詳細を見る →</a>
+                <a href="{{ route('threads.show', $thread) }}" class="text-blue-500 hover:text-blue-700">詳細を見る →</a>
             </div>
         </div>
     </div>
