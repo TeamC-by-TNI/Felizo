@@ -80,4 +80,21 @@ class ThreadController extends Controller
         $thread->delete();
         return redirect()->route('threads.index')->with('success', 'スレッドが削除されました。');
     }
+
+    // 🐶検索機能のため追加
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    
+    $threads = Thread::where('title', 'like', "%{$query}%")
+        ->orWhere('description', 'like', "%{$query}%")
+        ->orWhereHas('posts', function($q) use ($query) {
+            $q->where('content', 'like', "%{$query}%");
+        })
+        ->with('posts')
+        ->latest()
+        ->paginate(10);
+        
+    return view('threads.index', compact('threads'));
+}
 }

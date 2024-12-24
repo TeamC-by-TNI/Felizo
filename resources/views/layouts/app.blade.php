@@ -14,16 +14,32 @@
 </head>
 <body class="min-h-screen bg-white">
  <!-- ヘッダー -->
-    <header class="bg-purple-500 py-2 px-4">
+    <header class="bg-purple-500 py-4 px-4">
         <div class="container mx-auto flex items-center justify-between">
             <!-- 左：サイトロゴ -->
-            <div class="text-2xl font-bold text-white">Felizo</div>
+            <div>
+                <a href="{{ route('index') }}" class="text-2xl font-bold text-white hover:text-gray-100">Felizo</a>
+            </div>
         
                 <!-- 中央：検索バー -->
             <div class="flex items-center">
-                <input
-                    type="text" placeholder="検索" class="w-64 px-3 py-1.5 rounded-full bg-white focus:outline-none"
-                >
+             <form action="{{ route('threads.search') }}" method="GET" class="flex items-center gap-2">
+                 <div class="relative">
+                     <input
+                        type="text" 
+                        name="query"
+                        placeholder="検索" 
+                        class="w-64 px-3 py-1.5 rounded-full bg-white focus:outline-none"
+                        value="{{ request('query') }}"
+                    >
+                <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </button>
+            </div>
+            </form>
             </div>
         
             <!-- 右：Createボタン -->

@@ -19,7 +19,16 @@
 		}
 	},
 	"remoteUser": "sail",
-	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
+	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true",
+
+	// 以下を追加: SSHエージェントのマウントと環境変数
+	"mounts": [
+		"source=/run/user/1000/ssh-agent,target=/ssh-agent,type=bind"
+	],
+	"remoteEnv": {
+		"SSH_AUTH_SOCK": "/ssh-agent"
+	}
+	
 	// "forwardPorts": [],
 	// "runServices": [],
 	// "shutdownAction": "none",
