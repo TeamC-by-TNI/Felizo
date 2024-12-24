@@ -30,21 +30,18 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $threadId)
+    public function store(Request $request, Thread $thread)
     {
         // バリデーション
         $validated = $request->validate([
             'content' => 'required|string',
         ]);
 
-        // スレッドの取得
-        $thread = Thread::findOrFail($threadId);
-
         // 新しい投稿を保存
         $post = new Post();
         $post->content = $validated['content'];
         $post->thread_id = $thread->id;
-        $post->username = '匿名ユーザー'; // ユーザー登録がない場合は匿名ユーザーとして設定
+        $post->username = '匿名ユーザー';
         $post->save();
 
         return redirect()->route('threads.show', $thread->id)->with('success', 'コメントが投稿されました。');
