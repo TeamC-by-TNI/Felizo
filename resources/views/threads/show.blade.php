@@ -47,10 +47,15 @@
         <h2 class="text-xl font-bold mb-4">コメント</h2>
         @if(isset($thread->posts) && count($thread->posts) > 0)
             @foreach($thread->posts as $post)
-                <div class="bg-white shadow rounded-lg p-6">
+                <div class="comment-item bg-white shadow rounded-lg p-6" 
+                     data-created-at="{{ $post->created_at->toISOString() }}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
                             <span class="text-gray-500 text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
+                            <!-- 残り時間表示 -->
+                            <span class="text-xs text-red-500 ml-2">
+                                (60秒後に削除されます)
+                            </span>
                         </div>
                         <!-- スタンプボタン -->
                         <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
