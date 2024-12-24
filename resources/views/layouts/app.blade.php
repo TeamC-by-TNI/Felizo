@@ -14,10 +14,12 @@
 </head>
 <body class="min-h-screen bg-white">
  <!-- ヘッダー -->
-    <header class="bg-purple-500 py-2 px-4">
+    <header class="bg-purple-500 py-4 px-4">
         <div class="container mx-auto flex items-center justify-between">
             <!-- 左：サイトロゴ -->
-            <div class="text-2xl font-bold text-white">Felizo</div>
+            <div>
+                <a href="{{ route('index') }}" class="text-2xl font-bold text-white hover:text-gray-100">Felizo</a>
+            </div>
         
                 <!-- 中央：検索バー -->
             <div class="flex items-center">
