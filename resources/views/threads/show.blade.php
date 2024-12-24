@@ -11,7 +11,7 @@
             <span class="mx-2">•</span>
             <span>投稿者: ユーザー名</span>
         </div>
-        <p class="text-gray-700">{{$thread->discription}}</p>
+        <p class="text-gray-700">{{$thread->description}}</p>
     </div>
 
     <!-- コメント投稿フォーム -->
