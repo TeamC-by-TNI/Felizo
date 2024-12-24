@@ -16,7 +16,7 @@
                         タイトル
                     </label>
                     <input type="text" id="title" name="title" 
-                           class="w-full border-gray-300 rounded-md shadow-sm" 
+                           class="w-full border-gray-300 rounded-md shadow-sm px-4 py-2" 
                            placeholder="スレッドのタイトル">
                 </div>
 
@@ -26,14 +26,15 @@
                         内容
                     </label>
                     <textarea id="description" name="description" rows="5" 
-                              class="w-full border-gray-300 rounded-md shadow-sm"
+                              class="w-full border-gray-300 rounded-md shadow-sm px-4 py-2"
                               placeholder="スレッドの内容"></textarea>
                 </div>
 
                 <!-- 投稿ボタン -->
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
-                        投稿する
+                    <button type="submit" id="submitButton" class="font-bold py-2 px-6 rounded transition-colors 
+                        duration-200 bg-gray-400 text-white cursor-not-allowed" disabled>
+                    投稿する
                     </button>
                 </div>
             </form>
