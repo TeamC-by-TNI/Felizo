@@ -1,2 +1,2 @@
 import './bootstrap';
-import './thread-form.js'; 
+import './thread-create.js'; 
