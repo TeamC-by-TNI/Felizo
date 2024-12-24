@@ -13,11 +13,11 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\StampController;
 use App\Http\Controllers\ThreadController;
 
-Route::get('/',[ThreadController::class, 'index'];
-);
+Route::get('/',[ThreadController::class, 'index']);
+
 
 // 追加💡スレッド関連のリソースルート
 Route::resource('threads', ThreadController::class);
-Route::resource('posts', postsController::class);
-Route::resource('stamps', stampsController::class);
+Route::resource('posts', PostController::class);
+Route::resource('stamps', StampController::class);
 // Route::resource('stamp_types', stamp_typesController::class);
