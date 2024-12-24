@@ -20,18 +20,20 @@
             <div class="mb-4">
                 <textarea 
                     name="description" 
-                    class="w-full border-gray-300 rounded-md shadow-sm @error('description') border-red-500 @enderror" 
+                    class="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 @error('description') border-red-500 @enderror" 
                     rows="3" 
                     placeholder="コメントを入力してください"
                 >{{ old('description') }}</textarea>
+                <!-- ↑old('description')で送信失敗時には内容を保持する -->
                 @error('description')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="text-right">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" id="submitButton" class="font-bold py-2 px-6 rounded transition-colors 
+                        duration-200 bg-gray-400 text-white cursor-not-allowed" disabled>
                     投稿する
-                </button>
+                    </button>
             </div>
         </form>
     </div>
