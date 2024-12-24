@@ -18,7 +18,7 @@
         <div class="container mx-auto flex items-center justify-between">
             <!-- 左：サイトロゴ -->
             <div>
-                <a href="{{ route('index') }}" class="text-2xl font-bold text-white hover:text-gray-100">Felizo</a>
+                <a href="{{ route('threads.index') }}" class="text-2xl font-bold text-white hover:text-gray-100">Felizo</a>
             </div>
         
                 <!-- 中央：検索バー -->
