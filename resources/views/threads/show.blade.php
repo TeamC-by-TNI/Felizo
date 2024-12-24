@@ -19,12 +19,12 @@
             @csrf
             <div class="mb-4">
                 <textarea 
-                    name="content" 
-                    class="w-full border-gray-300 rounded-md shadow-sm @error('content') border-red-500 @enderror" 
+                    name="description" 
+                    class="w-full border-gray-300 rounded-md shadow-sm @error('description') border-red-500 @enderror" 
                     rows="3" 
                     placeholder="コメントを入力してください"
-                >{{ old('content') }}</textarea>
-                @error('content')
+                >{{ old('description') }}</textarea>
+                @error('description')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -54,7 +54,7 @@
                             </button>
                         </form>
                     </div>
-                    <p class="text-gray-700">{{ $post->content }}</p>
+                    <p class="text-gray-700">{{ $post->description }}</p>
                 </div>
             @endforeach
         @else
