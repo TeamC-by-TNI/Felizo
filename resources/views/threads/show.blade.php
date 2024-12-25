@@ -66,19 +66,46 @@
                                     </div>
                                     <div class="flex gap-2">
                                         <!-- スタンプボタン -->
-                                        <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
-                                            @csrf
-                                            <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                                👍
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($post->content)) !!}</p>
-                            </div>
-                        </div>
-                    </div>
-            @endforeach
+                                        <div class="relative">
+        <button type="button" 
+                onclick="toggleStampPicker(this)"
+                class="text-gray-500 hover:text-gray-700 flex items-center gap-1">
+            <span>😀</span>
+            <span class="text-xs">({{ $post->stamps->count() }})</span>
+        </button>
+        
+        <!-- スタンプピッカー -->
+    <div class="stamp-picker hidden absolute bottom-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
+        <div class="grid grid-cols-6 gap-2">
+            @foreach(\App\Models\StampType::all() as $stampType)
+                <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
+                    @csrf
+                    <input type="hidden" name="stamp_type_id" value="{{ $stampType->id }}">
+                    <button type="submit" 
+                            class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded"
+                            title="{{ $stampType->name }}">
+                        <img src="{{ asset('images/' . $stampType->icon_path) }}" 
+                            alt="{{ $stampType->name }}" 
+                            class="w-8 h-8 object-contain">
+                    </button>
+                </form>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    
+    <!-- 既存のスタンプ表示 -->
+    <div class="flex flex-wrap gap-1">
+    @foreach($post->stamps->groupBy('stamp_type_id') as $typeId => $stamps)
+        <span class="bg-gray-100 rounded px-2 py-1 text-sm flex items-center gap-1">
+            <img src="{{ asset('images/' . \App\Models\StampType::find($typeId)->icon_path) }}" 
+                 alt="{{ \App\Models\StampType::find($typeId)->name }}" 
+                 class="w-4 h-4 object-contain">
+            {{ $stamps->count() }}
+        </span>
+    @endforeach
+    </div>
+</div>
         @else
             <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
                 まだコメントがありません。最初のコメントを投稿してみましょう！
@@ -86,4 +113,22 @@
         @endif
     </div>
 </div>
+<!-- JavaScriptを追加 -->
+@push('scripts')
+<script>
+function toggleStampPicker(button) {
+    const picker = button.nextElementSibling;
+    picker.classList.toggle('hidden');
+}
+
+// クリックイベントをドキュメントに追加してピッカーの外側をクリックした時に閉じる
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.stamp-picker') && !event.target.closest('button')) {
+        document.querySelectorAll('.stamp-picker').forEach(picker => {
+            picker.classList.add('hidden');
+        });
+    }
+});
+</script>
+@endpush
 @endsection
