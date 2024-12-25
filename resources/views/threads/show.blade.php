@@ -66,7 +66,9 @@
                                 <div>
                                     <span class="font-medium text-sm">{{ $post->username }}</span>
                                     <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
-                                    <span class="text-xs text-red-500 ml-2">(60秒後に削除されます)</span>
+                                    <span class="text-xs text-red-500 ml-2 comment-countdown" data-created-at="{{ $post->created_at->toISOString() }}">
+                                        コメント削除まで残り：30秒
+                                    </span>
                                 </div>
                                 <div class="flex gap-2">
                                     <!-- スタンプボタン -->
