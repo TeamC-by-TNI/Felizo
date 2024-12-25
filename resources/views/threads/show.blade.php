@@ -47,8 +47,8 @@
         <h2 class="text-lg md:text-xl font-bold mb-4">コメント</h2>
         @if(isset($thread->posts) && count($thread->posts) > 0)
             @foreach($thread->posts as $post)
-                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6" 
-                     data-created-at="{{ $post->created_at->toISOString() }}">
+                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6"
+                    data-created-at="{{ $post->created_at->toISOString() }}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
                             <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
@@ -65,12 +65,13 @@
                                     👍
                                 </button>
                             </form>
+                        </div>
                     </div>
                     <p class="text-gray-700 text-sm md:text-base">{{ $post->content }}</p>
                 </div>
             @endforeach
         @else
-        <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
+            <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
                 まだコメントがありません。最初のコメントを投稿してみましょう！
             </div>
         @endif
