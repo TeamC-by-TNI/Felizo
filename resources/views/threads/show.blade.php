@@ -40,6 +40,8 @@
                 @error('content')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
+                <!-- 有害度チェック結果表示用 -->
+                <div id="toxicity-result" class="text-sm text-red-500 mt-2">有害な内容は投稿できません。</div>
             </div>
             <div class="text-right">
             <button type="submit" 
@@ -66,7 +68,7 @@
                                 <div>
                                     <span class="font-medium text-sm">{{ $post->username }}</span>
                                     <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
-                                    <span class="text-xs text-red-500 ml-2 comment-countdown" data-created-at="{{ $post->created_at->toISOString() }}">
+                                    <span class="text-xs ml-2 comment-countdown" data-created-at="{{ $post->created_at->toISOString() }}">
                                         コメント削除まで残り：30秒
                                     </span>
                                 </div>
@@ -125,20 +127,91 @@
 </div>
 <!-- JavaScriptを追加 -->
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-function toggleStampPicker(button) {
-    const picker = button.nextElementSibling;
-    picker.classList.toggle('hidden');
-}
+    const apiKey = '{{ config("services.perspective.api_key") }}';
+    let commentValid = false;
+    let toxicityValid = true;
 
-// クリックイベントをドキュメントに追加してピッカーの外側をクリックした時に閉じる
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.stamp-picker') && !event.target.closest('button')) {
-        document.querySelectorAll('.stamp-picker').forEach(picker => {
-            picker.classList.add('hidden');
+    function checkToxicity(text) {
+        console.log('checkToxicity関数が呼び出されました');
+        console.log('入力テキスト:', text);
+        
+        if (!text.trim()) {
+            console.log('テキストが空のため、チェックをスキップします');
+            return;
+        }
+
+        const url = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${apiKey}`;
+        const data = {
+            comment: { text: text },
+            requestedAttributes: { TOXICITY: {} }
+        };
+        
+        console.log('APIリクエスト先URL:', url);
+        console.log('送信データ:', data);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                console.log('API応答:', response);
+                const toxicity = response.attributeScores.TOXICITY.summaryScore.value;
+                const toxicityPercentage = (toxicity * 100).toFixed(2);
+
+                if (toxicity > 0.04) {
+                    $('#toxicity-result').text(`この内容が有害な可能性は ${toxicityPercentage}% です。`);
+                    toxicityValid = false;
+                } else {
+                    $('#toxicity-result').text('');
+                    toxicityValid = true;
+                }
+                updateButtonState();
+            },
+            error: function(xhr, status, error) {
+                console.error('APIエラー:', error);
+                console.error('エラーの詳細:', xhr.responseText);
+                $('#toxicity-result').text('有害度チェックでエラーが発生しました。');
+                toxicityValid = false;
+                updateButtonState();
+            }
         });
     }
-});
+
+    function updateButtonState() {
+        const submitButton = $('#submitButton2');
+        if (commentValid && toxicityValid) {
+            submitButton.removeClass('bg-gray-400 cursor-not-allowed')
+                       .addClass('bg-purple-500 hover:bg-purple-600')
+                       .prop('disabled', false);
+        } else {
+            submitButton.removeClass('bg-purple-500 hover:bg-purple-600')
+                       .addClass('bg-gray-400 cursor-not-allowed')
+                       .prop('disabled', true);
+        }
+    }
+
+    $('#comment').on('input', function() {
+        const text = $(this).val().trim();
+        commentValid = text !== '';
+        checkToxicity(text);
+    });
+
+    // 既存のスタンプピッカー関連のコード
+    function toggleStampPicker(button) {
+        const picker = button.nextElementSibling;
+        picker.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.stamp-picker') && !event.target.closest('button')) {
+            document.querySelectorAll('.stamp-picker').forEach(picker => {
+                picker.classList.add('hidden');
+            });
+        }
+    });
 </script>
 @endpush
 @endsection
