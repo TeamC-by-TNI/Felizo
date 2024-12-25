@@ -243,20 +243,6 @@
         commentValid = text !== '';
         checkToxicity(text);
     });
-
-    // 既存のスタンプピッカー関連のコード
-    function toggleStampPicker(button) {
-        const picker = button.nextElementSibling;
-        picker.classList.toggle('hidden');
-    }
-
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.stamp-picker') && !event.target.closest('button')) {
-            document.querySelectorAll('.stamp-picker').forEach(picker => {
-                picker.classList.add('hidden');
-            });
-        }
-    });
 </script>
 @endpush
 @endsection
