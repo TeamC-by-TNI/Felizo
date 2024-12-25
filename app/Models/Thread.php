@@ -14,12 +14,19 @@ class Thread extends Model
     protected $fillable = [
         'title',
         'description',
+<<<<<<< HEAD
         'expires_at'
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
     ];
+=======
+        'username',  // 追加
+        'avatar'     // 追加
+    ];
+    // bodyと記載していたが、ER図に合わせて修正
+>>>>>>> develop
 
     /**
      * スレッドに関連する投稿を取得する。

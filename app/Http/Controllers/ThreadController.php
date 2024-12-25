@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thread;
+// 🐶1行追加！
+use App\Helpers\RandomGenerator;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -37,8 +39,12 @@ class ThreadController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // expires_atを60分後に設定
+        // expires_atを1分後に設定
         $validated['expires_at'] = now()->addMinutes(1);
+
+        // 🐶ランダムなユーザー名とアバターを追加
+        $validated['username'] = RandomGenerator::generateUsername();
+        $validated['avatar'] = RandomGenerator::getRandomAvatar();
 
         // 新しいスレッドを保存
         $thread = Thread::create($validated);
