@@ -42,6 +42,7 @@ class PostController extends Controller
         $post->content = $validated['content'];
         $post->thread_id = $thread->id;
         $post->username = '匿名ユーザー';
+        $post->expires_at = now()->addSeconds(60); // 60秒後に期限切れ
         $post->save();
 
         return redirect()->route('threads.show', $thread->id)->with('success', 'コメントが投稿されました。');
