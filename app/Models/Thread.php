@@ -10,8 +10,15 @@ class Thread extends Model
     /** @use HasFactory<\Database\Factories\ThreadFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'description'];
-    // bodyと記載していたが、ER図に合わせて修正
+    protected $fillable = [
+        'title',
+        'description',
+        'expires_at'
+    ];
+
+    protected $dates = [
+        'expires_at'
+    ];
 
     /**
      * スレッドに関連する投稿を取得する。
