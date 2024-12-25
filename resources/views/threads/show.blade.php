@@ -5,8 +5,8 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- スレッドのヘッダー部分 -->
     <div class="bg-white shadow rounded-lg p-4 md:p-6 mb-6">
-        <div class="flex items-center mb-4">
-            <img src="{{ asset('images/avatars/' . $thread->avatar) }}" alt="作成者のアバター" class="w-8 h-8 rounded-full">
+        <div class="flex items-start mb-4">
+            <img src="{{ asset('images/avatars/' . $thread->avatar) }}" alt="作成者のアバター" class="w-12 h-12 rounded-full">
             <div class="ml-3 flex-grow">
                 <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ $thread->title }}</h1>
                 <div class="flex items-center text-gray-500 text-xs md:text-sm mb-4">
@@ -23,7 +23,8 @@
                         <span class="text-xs">({{ $thread->stamps->count() }})</span>
                     </button>
                     <!-- スタンプピッカー -->
-                    <div class="stamp-picker hidden absolute top-full left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
+                    <div class="stamp-picker hidden absolute top-full left-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
+
                         <div class="grid grid-cols-6 gap-2">
                             @foreach(\App\Models\StampType::all() as $stampType)
                                 <form action="{{ route('stamps.store', ['type' => 'thread', 'id' => $thread->id]) }}" 
@@ -105,7 +106,7 @@
             @foreach($thread->posts as $post)
                 <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6" data-created-at="{{ $post->created_at->toISOString() }}">
                     <div class="flex items-start">
-                        <img src="{{ asset('images/avatars/' . $post->avatar) }}" alt="投稿者のアバター" class="w-6 h-6 rounded-full">
+                        <img src="{{ asset('images/avatars/' . $post->avatar) }}" alt="投稿者のアバター" class="w-10 h-10 rounded-full">
                         <div class="ml-3 flex-grow">
                             <div class="flex justify-between items-start mb-2">
                                 <div>

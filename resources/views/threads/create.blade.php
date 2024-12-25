@@ -92,7 +92,7 @@
                 const toxicityPercentage = (toxicity * 100).toFixed(2);
 
                 if (toxicity > 0.04) {
-                    $('#toxicity-result').text(`この内容が有害な可能性は ${toxicityPercentage}% です。`);
+                    $('#toxicity-result').text(`有害な内容を ${toxicityPercentage}% 含んでいるため投稿できません。`);
                     toxicityValid = false;
                 } else {
                     $('#toxicity-result').text('');

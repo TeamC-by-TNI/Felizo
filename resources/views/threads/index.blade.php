@@ -11,7 +11,7 @@
                     <div class="flex items-center space-x-2 mb-3">
                         <img src="{{ asset('images/avatars/' . $thread->avatar) }}" 
                              alt="作成者のアバター" 
-                             class="w-6 h-6 rounded-full"
+                             class="w-10 h-10 rounded-full"
                              onerror="this.src='{{ asset('images/avatars/avatar1.PNG') }}'">
                         <div class="flex flex-col">
                             <span class="font-medium text-gray-700 line-clamp-1">{{ $thread->title }}</span>
