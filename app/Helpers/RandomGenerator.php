@@ -20,11 +20,16 @@ class RandomGenerator
     {
         // 用意したアイコンの中からランダムに1つ選択
         $avatars = [
-            'avatar1.PNG',
-            'avatar2.PNG',
-            'avatar3.PNG',
-            'avatar4.PNG',
-            'avatar5.png'
+            'avatar1.png',
+            'avatar2.png',
+            'avatar3.png',
+            'avatar4.png',
+            'avatar5.png',
+            'avatar6.png',
+            'avatar7.png',
+            'avatar8.png',
+            'avatar9.png',
+            'avatar10.png'
         ];
         
         return $avatars[array_rand($avatars)];
