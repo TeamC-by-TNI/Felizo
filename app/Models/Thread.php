@@ -16,6 +16,8 @@ class Thread extends Model
     /**
      * スレッドに関連する投稿を取得する。
      */
+
+    // 🐶コメント数表示のため追加
     public function posts()
     {
         return $this->hasMany(Post::class);
