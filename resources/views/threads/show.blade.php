@@ -5,9 +5,15 @@
 <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- スレッドのヘッダー部分 -->
     <div class="bg-white shadow rounded-lg p-4 md:p-6 mb-6">
-        <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ $thread->title }}</h1>
-        <div class="flex items-center text-gray-500 text-xs md:text-sm mb-4">
-            <span>投稿日時: {{ $thread->created_at->format('Y/m/d H:i') }}</span>
+        <div class="flex items-center mb-4">
+            <img src="{{ asset('images/avatars/' . $thread->avatar) }}" alt="作成者のアバター" class="w-8 h-8 rounded-full">
+            <div class="ml-3">
+                <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ $thread->title }}</h1>
+                <div class="flex items-center text-gray-500 text-xs md:text-sm mb-4">
+                    <span class="mr-2">{{ $thread->username }}</span>
+                    <span>投稿日時: {{ $thread->created_at->format('Y/m/d H:i') }}</span>
+                </div>
+            </div>
         </div>
         <p class="text-gray-700 text-sm md:text-base">{{ $thread->description }}</p>
     </div>
@@ -47,23 +53,31 @@
         <h2 class="text-lg md:text-xl font-bold mb-4">コメント</h2>
         @if(isset($thread->posts) && count($thread->posts) > 0)
             @foreach($thread->posts as $post)
-                <div class="bg-white shadow rounded-lg p-4 md:p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <!-- スタンプボタン -->
-                            <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                    👍
-                                </button>
-                            </form>
+                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6"
+                    data-created-at="{{ $post->created_at->toISOString() }}">
+                    <div class="flex items-start">
+                        <img src="{{ asset('images/avatars/' . $post->avatar) }}" alt="投稿者のアバター" class="w-6 h-6 rounded-full">
+                            <div class="ml-3 flex-grow">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <span class="font-medium text-sm">{{ $post->username }}</span>
+                                        <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
+                                        <span class="text-xs text-red-500 ml-2">(60秒後に削除されます)</span>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <!-- スタンプボタン -->
+                                        <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="text-gray-500 hover:text-gray-700">
+                                                👍
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 text-sm md:text-base">{{ $post->content }}</p>
+                            </div>
                         </div>
                     </div>
-                    <p class="text-gray-700 text-sm md:text-base">{{ $post->content }}</p>
-                </div>
             @endforeach
         @else
             <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
