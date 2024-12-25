@@ -37,8 +37,8 @@ class ThreadController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // expires_atを3分後に設定
-        $validated['expires_at'] = now()->addMinutes(3);
+        // expires_atを60分後に設定
+        $validated['expires_at'] = now()->addMinutes(1);
 
         // 新しいスレッドを保存
         $thread = Thread::create($validated);

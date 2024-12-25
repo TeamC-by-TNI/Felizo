@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Thread extends Model
 {
@@ -16,8 +17,8 @@ class Thread extends Model
         'expires_at'
     ];
 
-    protected $dates = [
-        'expires_at'
+    protected $casts = [
+        'expires_at' => 'datetime',
     ];
 
     /**
@@ -28,5 +29,17 @@ class Thread extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('unexpired', function (Builder $builder) {
+            $builder->where(function ($query) {
+                $query->whereNull('expires_at')
+                      ->orWhere('expires_at', '>', now());
+            });
+        });
     }
 }

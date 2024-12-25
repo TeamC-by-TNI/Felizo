@@ -6,7 +6,8 @@
 <main class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($threads as $thread)
-            <div class="bg-white border border-gray-200 mb-4">
+            <div class="bg-white border border-gray-200 mb-4" 
+                 data-expires-at="{{ $thread->expires_at ? $thread->expires_at->toISOString() : '' }}">
                 <div class="p-4">
                     <div class="flex items-center space-x-2 mb-3">
                         <!-- ※下記のアイコンの記述はとりあえずランダムに3色を表示させるものなので、アイコンテーブルが出来たら要編集※ -->
@@ -22,12 +23,12 @@
                 </div>
                 <div class="px-4 py-2 border-t border-gray-100">
                     <div class="flex items-center justify-between">
-                        <div class="flex flex-col">
-                            <a href="{{ route('threads.show', $thread) }}" class="inline-block bg-black text-white px-3 py-1 text-xs rounded hover:bg-gray-800 transition-colors">
+                        <div class="flex flex-col items-start">
+                            <a href="{{ route('threads.show', $thread) }}" class="inline-block bg-black text-white px-3 py-1 text-xs rounded hover:bg-gray-800 transition-colors w-12 text-center">
                                 詳細
                             </a>
-                            <span class="text-xs text-gray-500 mt-1">
-                                残り時間: {{ $thread->expires_at ? $thread->expires_at->diffForHumans() : '無期限' }}
+                            <span class="text-xs text-gray-500 mt-1 expiration-time">
+                                残り時間: {{ $thread->expires_at ? now()->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) : '無期限' }}
                             </span>
                         </div>
                         <div class="flex items-center text-gray-600">
