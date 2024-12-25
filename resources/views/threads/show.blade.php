@@ -243,6 +243,47 @@
         commentValid = text !== '';
         checkToxicity(text);
     });
+
+    // スタンプピッカーの表示/非表示を制御する関数
+    function toggleStampPicker(button) {
+        const picker = button.nextElementSibling;
+        // 他のすべてのピッカーを非表示にする
+        document.querySelectorAll('.stamp-picker').forEach(p => {
+            if (p !== picker) p.classList.add('hidden');
+        });
+        // クリックされたピッカーの表示を切り替え
+        picker.classList.toggle('hidden');
+    }
+
+    // スタンプ送信処理
+    function submitStamp(form, event) {
+        event.preventDefault();
+        
+        $.ajax({
+            url: form.action,
+            method: 'POST',
+            data: new FormData(form),
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // 成功時の処理
+                location.reload(); // ページをリロードしてスタンプを表示更新
+            },
+            error: function(error) {
+                console.error('Error:', error);
+                alert('スタンプの送信に失敗しました。');
+            }
+        });
+    }
+
+    // クリック以外の場所をクリックした時にスタンプピッカーを閉じる
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.stamp-picker') && !event.target.closest('button[onclick="toggleStampPicker(this)"]')) {
+            document.querySelectorAll('.stamp-picker').forEach(picker => {
+                picker.classList.add('hidden');
+            });
+        }
+    });
 </script>
 @endpush
 @endsection
