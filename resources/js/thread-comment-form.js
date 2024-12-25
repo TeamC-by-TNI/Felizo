@@ -25,10 +25,30 @@ document.addEventListener('DOMContentLoaded', function () {
     comments.forEach(comment => {
         const createdAt = new Date(comment.dataset.createdAt).getTime();
         const now = new Date().getTime();
-        const timeLeft = Math.max(0, 60000 - (now - createdAt)); // 60秒 = 60000ミリ秒
+        const timeLeft = Math.max(0, 30000 - (now - createdAt)); // 30秒 = 30000ミリ秒
+
+        // カウントダウン表示の更新関数
+        function updateCountdown() {
+            const currentTime = new Date().getTime();
+            const remainingTime = Math.max(0, 30000 - (currentTime - createdAt));
+            const seconds = Math.ceil(remainingTime / 1000);
+            
+            const countdownElement = comment.querySelector('.comment-countdown');
+            if (countdownElement) {
+                if (seconds > 0) {
+                    countdownElement.textContent = `コメント削除まで残り：${seconds}秒`;
+                } else {
+                    countdownElement.textContent = 'まもなく削除されます';
+                }
+            }
+        }
+
+        // 1秒ごとにカウントダウンを更新
+        const countdownInterval = setInterval(updateCountdown, 1000);
 
         if (timeLeft > 0) {
             setTimeout(() => {
+                clearInterval(countdownInterval);
                 comment.style.transition = 'opacity 0.5s';
                 comment.style.opacity = '0';
                 setTimeout(() => {
@@ -36,7 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
             }, timeLeft);
         } else {
+            clearInterval(countdownInterval);
             comment.remove();
         }
+
+        // 初回実行
+        updateCountdown();
     });
 });
