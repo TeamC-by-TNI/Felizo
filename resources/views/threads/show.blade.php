@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <p class="text-gray-700 text-sm md:text-base">{{ $thread->description }}</p>
+        <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($thread->description)) !!}</p>
     </div>
 
     <!-- コメント投稿フォーム -->
@@ -74,7 +74,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <p class="text-gray-700 text-sm md:text-base">{{ $post->content }}</p>
+                                <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($post->content)) !!}</p>
                             </div>
                         </div>
                     </div>
