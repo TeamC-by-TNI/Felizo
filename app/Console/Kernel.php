@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('posts:delete-expired')
                 ->everySecond()
                 ->appendOutputTo(storage_path('logs/scheduler.log'));
+        $schedule->command('threads:delete-expired')->everyMinute();
     }
 
     /**
