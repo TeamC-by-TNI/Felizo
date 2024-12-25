@@ -10,7 +10,12 @@ class Thread extends Model
     /** @use HasFactory<\Database\Factories\ThreadFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = [
+        'title',
+        'description',
+        'username',  // 追加
+        'avatar'     // 追加
+    ];
     // bodyと記載していたが、ER図に合わせて修正
 
     /**
