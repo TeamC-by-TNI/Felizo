@@ -69,4 +69,5 @@
     <footer class="bg-purple-500 text-white text-center py-4">
         Felizo 2024 All Rights reserved.
     </footer>
+    @stack('scripts')
 </body>
