@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thread;
+// 🐶1行追加！
+use App\Helpers\RandomGenerator;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -36,6 +38,10 @@ class ThreadController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
+
+        // 🐶ランダムなユーザー名とアバターを追加
+        $validated['username'] = RandomGenerator::generateUsername();
+        $validated['avatar'] = RandomGenerator::getRandomAvatar();
 
         // 新しいスレッドを保存
         $thread = Thread::create($validated);
