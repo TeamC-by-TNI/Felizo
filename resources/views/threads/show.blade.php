@@ -14,6 +14,11 @@
                     <span>投稿日時: {{ $thread->created_at->format('Y/m/d H:i') }}</span>
                 </div>
             </div>
+            <div class="ml-auto mt-2 mr-4">
+                <span class="text-xs text-gray-500 expiration-time" data-expires-at="{{ $thread->expires_at ? $thread->expires_at->toISOString() : '' }}">
+                    スレッド削除まで残り: {{ $thread->expires_at ? now()->locale('ja')->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) : '無期限' }}
+                </span>
+            </div>
         </div>
         <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($thread->description)) !!}</p>
     </div>

@@ -29,7 +29,7 @@
                                 詳細
                             </a>
                             <span class="text-xs text-gray-500 mt-1 expiration-time">
-                                残り時間: {{ $thread->expires_at ? now()->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) : '無期限' }}
+                                スレッド削除まで残り: {{ $thread->expires_at ? now()->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW]) : '無期限' }}
                             </span>
                         </div>
                         <div class="flex items-center text-gray-600">
