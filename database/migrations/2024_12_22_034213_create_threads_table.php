@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             // $table->string('description');->nullable();Null値って許容して良いのか？
-            // 🐶以下2行追加
-            $table->string('username')->nullable();
-            $table->string('avatar')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Models\Thread;
 // 🐶1行追加！
 use App\Helpers\RandomGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ThreadController extends Controller
 {
@@ -42,9 +43,19 @@ class ThreadController extends Controller
         // expires_atを1分後に設定
         $validated['expires_at'] = now()->addMinutes(1);
 
-        // 🐶ランダムなユーザー名とアバターを追加
-        $validated['username'] = RandomGenerator::generateUsername();
-        $validated['avatar'] = RandomGenerator::getRandomAvatar();
+        // 🐶ランダムなユーザー名とアバター + デバッグ出力追加
+        // エラーが発生する場合は、storage/logs/laravel.logでエラーメッセージを確認
+        try {
+            $username = RandomGenerator::generateUsername();
+            $avatar = RandomGenerator::getRandomAvatar();
+            \Log::info('Generated username: ' . $username);
+            \Log::info('Generated avatar: ' . $avatar);
+
+            $validated['username'] = $username;
+            $validated['avatar'] = $avatar;
+        } catch (\Exception $e) {
+            \Log::error('Error in RandomGenerator: ' . $e->getMessage());
+        }
 
         // 新しいスレッドを保存
         $thread = Thread::create($validated);
