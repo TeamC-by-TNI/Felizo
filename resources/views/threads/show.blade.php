@@ -2,19 +2,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- スレッドのヘッダー部分 -->
-    <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <h1 class="text-3xl font-bold mb-2">{{ $thread->title }}</h1>
-        <div class="flex items-center text-gray-500 text-sm mb-4">
+    <div class="bg-white shadow rounded-lg p-4 md:p-6 mb-6">
+        <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ $thread->title }}</h1>
+        <div class="flex items-center text-gray-500 text-xs md:text-sm mb-4">
             <span>投稿日時: {{ $thread->created_at->format('Y/m/d H:i') }}</span>
         </div>
-        <p class="text-gray-700">{{ $thread->description }}</p>
+        <p class="text-gray-700 text-sm md:text-base">{{ $thread->description }}</p>
     </div>
 
     <!-- コメント投稿フォーム -->
-    <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 class="text-xl font-bold mb-4">コメントを投稿</h2>
+    <div class="bg-white shadow rounded-lg p-4 md:p-6 mb-6">
+        <h2 class="text-lg md:text-xl font-bold mb-4">コメントを投稿</h2>
         <form action="{{ route('posts.store', $thread) }}" method="POST">
             @csrf
             <div class="mb-4">
@@ -44,32 +44,33 @@
 
     <!-- コメント一覧 -->
     <div class="space-y-4">
-        <h2 class="text-xl font-bold mb-4">コメント</h2>
+        <h2 class="text-lg md:text-xl font-bold mb-4">コメント</h2>
         @if(isset($thread->posts) && count($thread->posts) > 0)
             @foreach($thread->posts as $post)
-                <div class="comment-item bg-white shadow rounded-lg p-6" 
+                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6" 
                      data-created-at="{{ $post->created_at->toISOString() }}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <span class="text-gray-500 text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
+                            <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
                             <!-- 残り時間表示 -->
                             <span class="text-xs text-red-500 ml-2">
                                 (60秒後に削除されます)
                             </span>
                         </div>
-                        <!-- スタンプボタン -->
-                        <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                👍
-                            </button>
-                        </form>
+                        <div class="flex gap-2">
+                            <!-- スタンプボタン -->
+                            <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-gray-500 hover:text-gray-700">
+                                    👍
+                                </button>
+                            </form>
                     </div>
-                    <p class="text-gray-700">{{ $post->content }}</p>
+                    <p class="text-gray-700 text-sm md:text-base">{{ $post->content }}</p>
                 </div>
             @endforeach
         @else
-            <div class="bg-white shadow rounded-lg p-6 text-center text-gray-500">
+        <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
                 まだコメントがありません。最初のコメントを投稿してみましょう！
             </div>
         @endif
