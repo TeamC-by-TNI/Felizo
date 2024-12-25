@@ -39,6 +39,10 @@ class PostController extends Controller
             'content' => 'required|string',
         ]);
 
+        // スレッドの有効期限を60秒延長
+        $thread->expires_at = now()->addSeconds(60);
+        $thread->save();
+
         // 新しい投稿を保存
         $post = new Post();
         $post->content = $validated['content'];
@@ -50,7 +54,8 @@ class PostController extends Controller
         $post->expires_at = now()->addSeconds(60); // 60秒後に期限切れ
         $post->save();
 
-        return redirect()->route('threads.show', $thread->id)->with('success', 'コメントが投稿されました。');
+        return redirect()->route('threads.show', $thread->id)
+            ->with('success', 'コメントが投稿されました。');
     }
 
     /**

@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateExpirationTime() {
         threads.forEach(thread => {
-            const expiresAt = new Date(thread.dataset.expiresAt).getTime();
+            const expiresAtElement = thread.querySelector('[data-expires-at]');
+            const expiresAt = new Date(expiresAtElement.dataset.expiresAt).getTime();
             const now = new Date().getTime();
             const timeLeft = expiresAt - now;
 
