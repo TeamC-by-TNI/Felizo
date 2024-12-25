@@ -53,59 +53,63 @@
         <h2 class="text-lg md:text-xl font-bold mb-4">コメント</h2>
         @if(isset($thread->posts) && count($thread->posts) > 0)
             @foreach($thread->posts as $post)
-                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6"
-                    data-created-at="{{ $post->created_at->toISOString() }}">
+                <div class="comment-item bg-white shadow rounded-lg p-4 md:p-6" data-created-at="{{ $post->created_at->toISOString() }}">
                     <div class="flex items-start">
                         <img src="{{ asset('images/avatars/' . $post->avatar) }}" alt="投稿者のアバター" class="w-6 h-6 rounded-full">
-                            <div class="ml-3 flex-grow">
-                                <div class="flex justify-between items-start mb-2">
-                                    <div>
-                                        <span class="font-medium text-sm">{{ $post->username }}</span>
-                                        <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
-                                        <span class="text-xs text-red-500 ml-2">(60秒後に削除されます)</span>
+                        <div class="ml-3 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <span class="font-medium text-sm">{{ $post->username }}</span>
+                                    <span class="text-gray-500 text-xs md:text-sm ml-2">{{ $post->created_at->format('Y/m/d H:i') }}</span>
+                                    <span class="text-xs text-red-500 ml-2">(60秒後に削除されます)</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <!-- スタンプボタン -->
+                                    <div class="relative">
+                                        <button type="button" 
+                                                onclick="toggleStampPicker(this)"
+                                                class="text-gray-500 hover:text-gray-700 flex items-center gap-1">
+                                            <span>😀</span>
+                                            <span class="text-xs">({{ $post->stamps->count() }})</span>
+                                        </button>
+                                        
+                                        <!-- スタンプピッカー -->
+                                        <div class="stamp-picker hidden absolute bottom-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
+                                            <div class="grid grid-cols-6 gap-2">
+                                                @foreach(\App\Models\StampType::all() as $stampType)
+                                                    <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        <input type="hidden" name="stamp_type_id" value="{{ $stampType->id }}">
+                                                        <button type="submit" 
+                                                                class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded"
+                                                                title="{{ $stampType->name }}">
+                                                            <img src="{{ asset('images/' . $stampType->icon_path) }}" 
+                                                                 alt="{{ $stampType->name }}" 
+                                                                 class="w-8 h-8 object-contain">
+                                                        </button>
+                                                    </form>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex gap-2">
-                                        <!-- スタンプボタン -->
-                                        <div class="relative">
-        <button type="button" 
-                onclick="toggleStampPicker(this)"
-                class="text-gray-500 hover:text-gray-700 flex items-center gap-1">
-            <span>😀</span>
-            <span class="text-xs">({{ $post->stamps->count() }})</span>
-        </button>
-        
-        <!-- スタンプピッカー -->
-    <div class="stamp-picker hidden absolute bottom-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
-        <div class="grid grid-cols-6 gap-2">
-            @foreach(\App\Models\StampType::all() as $stampType)
-                <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
-                    @csrf
-                    <input type="hidden" name="stamp_type_id" value="{{ $stampType->id }}">
-                    <button type="submit" 
-                            class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded"
-                            title="{{ $stampType->name }}">
-                        <img src="{{ asset('images/' . $stampType->icon_path) }}" 
-                            alt="{{ $stampType->name }}" 
-                            class="w-8 h-8 object-contain">
-                    </button>
-                </form>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    
-    <!-- 既存のスタンプ表示 -->
-    <div class="flex flex-wrap gap-1">
-    @foreach($post->stamps->groupBy('stamp_type_id') as $typeId => $stamps)
-        <span class="bg-gray-100 rounded px-2 py-1 text-sm flex items-center gap-1">
-            <img src="{{ asset('images/' . \App\Models\StampType::find($typeId)->icon_path) }}" 
-                 alt="{{ \App\Models\StampType::find($typeId)->name }}" 
-                 class="w-4 h-4 object-contain">
-            {{ $stamps->count() }}
-        </span>
-    @endforeach
-    </div>
-</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 既存のスタンプ表示 -->
+                            <div class="flex flex-wrap gap-1">
+                                @foreach($post->stamps->groupBy('stamp_type_id') as $typeId => $stamps)
+                                    <span class="bg-gray-100 rounded px-2 py-1 text-sm flex items-center gap-1">
+                                        <img src="{{ asset('images/' . \App\Models\StampType::find($typeId)->icon_path) }}" 
+                                             alt="{{ \App\Models\StampType::find($typeId)->name }}" 
+                                             class="w-4 h-4 object-contain">
+                                        {{ $stamps->count() }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         @else
             <div class="bg-white shadow rounded-lg p-4 md:p-6 text-center text-gray-500 text-sm md:text-base">
                 まだコメントがありません。最初のコメントを投稿してみましょう！
