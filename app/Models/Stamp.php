@@ -2,28 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Stamp extends Model
 {
-    /** @use HasFactory<\Database\Factories\StampFactory> */
-    use HasFactory;
-    protected $fillable = ['post_id', 'stamp_type_id'];
+    protected $fillable = ['stampable_type', 'stampable_id', 'stamp_type_id', 'user_id'];
 
-    /**
-     * スタンプが関連する投稿を取得する。
-     */
-    public function post()
+    public function stampable()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
     }
 
-    /**
-     * スタンプが属するスタンプタイプを取得する。
-     */
     public function stampType()
     {
         return $this->belongsTo(StampType::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

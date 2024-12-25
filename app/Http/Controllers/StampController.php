@@ -31,32 +31,55 @@ class StampController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Post $post)
-{
-    // バリデーション（スタンプIDとユーザーIDが正しいか）
-    $request->validate([
-        'stamp_type_id' => 'required|exists:stamp_types,id', // スタンプの種類ID
-    ]);
-
-    // 現在のユーザー
-    $user = auth()->user();
-
-    // ユーザーがすでにこの投稿にスタンプを押しているか確認
-    $existingStamp = $post->stamps()->where('user_id', $user->id)->first();
-
-    if ($existingStamp) {
-        // すでにスタンプを押している場合は何もしないか、再選択を促すなど
-        return back()->with('message', 'You already stamped this post!');
+    public function store(Request $request, $type, $id)
+    {
+        $request->validate([
+            'stamp_type_id' => 'required|exists:stamp_types,id',
+        ]);
+    
+        $stampable = $type === 'thread' 
+            ? Thread::findOrFail($id) 
+            : Post::findOrFail($id);
+    
+        // 既存のスタンプをチェック
+        $existingStamp = $stampable->stamps()
+            ->where('user_id', auth()->id())
+            ->where('stamp_type_id', $request->stamp_type_id)
+            ->first();
+    
+        if ($existingStamp) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Already stamped'
+            ]);
+        }
+    
+        // 新しいスタンプを作成
+        $stamp = $stampable->stamps()->create([
+            'user_id' => auth()->id(),
+            'stamp_type_id' => $request->stamp_type_id,
+        ]);
+    
+        // スタンプの集計を取得
+        $stamps = $stampable->stamps()
+            ->with('stampType')
+            ->get()
+            ->groupBy('stamp_type_id')
+            ->map(function($stamps) {
+                $stampType = $stamps->first()->stampType;
+                return [
+                    'name' => $stampType->name,
+                    'icon_path' => $stampType->icon_path,
+                    'count' => $stamps->count()
+                ];
+            });
+    
+        return response()->json([
+            'success' => true,
+            'stamps' => $stamps,
+            'totalCount' => $stampable->stamps->count()
+        ]);
     }
-
-    // 新しいスタンプを保存
-    $post->stamps()->create([
-        'user_id' => $user->id,
-        'stamp_type_id' => $request->stamp_type_id,
-    ]);
-
-    return back()->with('message', 'Stamp added successfully!');
-}
 
     /**
      * Display the specified resource.

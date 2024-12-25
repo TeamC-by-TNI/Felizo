@@ -13,15 +13,57 @@
                     <span class="mr-2">{{ $thread->username }}</span>
                     <span>投稿日時: {{ $thread->created_at->format('Y/m/d H:i') }}</span>
                 </div>
+                <div class="ml-auto mt-2 mr-4">
+                    <span class="text-xs text-gray-500 expiration-time" data-expires-at="{{ $thread->expires_at ? $thread->expires_at->toISOString() : '' }}">
+                        スレッド削除まで残り: {{ $thread->expires_at ? now()->locale('ja')->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) : '無期限' }}
+                    </span>
+                </div>
+                <!--🐶 スレッドのスタンプボタン -->
+                <div class="relative mt-2">
+                    <button type="button" 
+                            onclick="toggleStampPicker(this)"
+                            class="text-gray-500 hover:text-gray-700 flex items-center gap-1">
+                        <span>😊</span>
+                        <span class="text-xs">({{ $thread->stamps->count() }})</span>
+                    </button>
+                    <!-- スタンプピッカー -->
+                    <div class="stamp-picker hidden absolute top-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
+                        <div class="grid grid-cols-6 gap-2">
+                            @foreach(\App\Models\StampType::all() as $stampType)
+                                <form action="{{ route('stamps.store', ['type' => 'thread', 'id' => $thread->id]) }}" 
+                                    method="POST" 
+                                    class="inline"
+                                    onsubmit="submitStamp(this, event)">
+                                    @csrf
+                                    <input type="hidden" name="stamp_type_id" value="{{ $stampType->id }}">
+                                    <button type="submit" 
+                                            class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded"
+                                            title="{{ $stampType->name }}">
+                                        <img src="{{ asset('images/stamps/' . $stampType->icon_path) }}" 
+                                            alt="{{ $stampType->name }}" 
+                                            class="w-8 h-8 object-contain">
+                                    </button>
+                                </form>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="ml-auto mt-2 mr-4">
-                <span class="text-xs text-gray-500 expiration-time" data-expires-at="{{ $thread->expires_at ? $thread->expires_at->toISOString() : '' }}">
-                    スレッド削除まで残り: {{ $thread->expires_at ? now()->locale('ja')->diffForHumans($thread->expires_at, ['syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) : '無期限' }}
-                </span>
+            <!-- スレッドのスタンプ表示 -->
+            <div class="flex flex-wrap gap-1 mt-2">
+                @foreach($thread->stamps->groupBy('stamp_type_id') as $typeId => $stamps)
+                    <span class="bg-gray-100 rounded px-2 py-1 text-sm flex items-center gap-1">
+                        <img src="{{ asset('images/stamps/' . \App\Models\StampType::find($typeId)->icon_path) }}" 
+                            alt="{{ \App\Models\StampType::find($typeId)->name }}" 
+                            class="w-4 h-4 object-contain">
+                        {{ $stamps->count() }}
+                    </span>
+                @endforeach
             </div>
         </div>
-        <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($thread->description)) !!}</p>
     </div>
+    <!-- 🐶ここまでテスト追加 -->
+        <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($thread->description)) !!}</p>
 
     <!-- コメント投稿フォーム -->
     <div class="bg-white shadow rounded-lg p-4 md:p-6 mb-6">
@@ -85,15 +127,18 @@
                                         <div class="stamp-picker hidden absolute bottom-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
                                             <div class="grid grid-cols-6 gap-2">
                                                 @foreach(\App\Models\StampType::all() as $stampType)
-                                                    <form action="{{ route('stamps.store', $post) }}" method="POST" class="inline">
+                                                <form action="{{ route('stamps.store', ['type' => 'post', 'id' => $post->id]) }}" 
+                                                        method="POST" 
+                                                        class="inline"
+                                                        onsubmit="submitStamp(this, event)">
                                                         @csrf
                                                         <input type="hidden" name="stamp_type_id" value="{{ $stampType->id }}">
                                                         <button type="submit" 
                                                                 class="w-10 h-10 flex items-center justify-center hover:bg-gray-100 rounded"
                                                                 title="{{ $stampType->name }}">
-                                                            <img src="{{ asset('images/' . $stampType->icon_path) }}" 
-                                                                 alt="{{ $stampType->name }}" 
-                                                                 class="w-8 h-8 object-contain">
+                                                            <img src="{{ asset('images/stamps/' . $stampType->icon_path) }}" 
+                                                                alt="{{ $stampType->name }}" 
+                                                                class="w-8 h-8 object-contain">
                                                         </button>
                                                     </form>
                                                 @endforeach
@@ -197,20 +242,6 @@
         const text = $(this).val().trim();
         commentValid = text !== '';
         checkToxicity(text);
-    });
-
-    // 既存のスタンプピッカー関連のコード
-    function toggleStampPicker(button) {
-        const picker = button.nextElementSibling;
-        picker.classList.toggle('hidden');
-    }
-
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.stamp-picker') && !event.target.closest('button')) {
-            document.querySelectorAll('.stamp-picker').forEach(picker => {
-                picker.classList.add('hidden');
-            });
-        }
     });
 </script>
 @endpush

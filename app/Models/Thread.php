@@ -45,4 +45,10 @@ class Thread extends Model
             });
         });
     }
+
+    // 🐶スタンプのために以下を追加
+        public function stamps()
+    {
+        return $this->morphMany(Stamp::class, 'stampable');
+    }
 }
