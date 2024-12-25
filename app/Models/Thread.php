@@ -22,9 +22,8 @@ class Thread extends Model
     }
 
     // 🐶コメント数表示のため追加
-    // app/Models/Thread.php
-    public function comments()
+    public function posts()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Post::class);
     }
 }
