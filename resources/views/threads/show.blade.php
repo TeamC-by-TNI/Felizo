@@ -72,7 +72,6 @@
                                             <span>😀</span>
                                             <span class="text-xs">({{ $post->stamps->count() }})</span>
                                         </button>
-                                        
                                         <!-- スタンプピッカー -->
                                         <div class="stamp-picker hidden absolute bottom-full right-0 bg-white shadow-lg rounded-lg p-2 w-96 z-10">
                                             <div class="grid grid-cols-6 gap-2">
@@ -94,7 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <!-- 既存のスタンプ表示 -->
                             <div class="flex flex-wrap gap-1">
                                 @foreach($post->stamps->groupBy('stamp_type_id') as $typeId => $stamps)
@@ -106,6 +104,7 @@
                                     </span>
                                 @endforeach
                             </div>
+                            <p class="text-gray-700 text-sm md:text-base">{!! nl2br(e($post->content)) !!}</p>
                         </div>
                     </div>
                 </div>
