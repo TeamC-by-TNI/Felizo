@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Thread;
+// 🐶以下1行追加
+use App\Helpers\RandomGenerator;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -41,7 +43,10 @@ class PostController extends Controller
         $post = new Post();
         $post->content = $validated['content'];
         $post->thread_id = $thread->id;
-        $post->username = '匿名ユーザー';
+        //$post->username = '匿名ユーザー';
+        // 🐶以下2行追加
+        $post->username = RandomGenerator::generateUsername(); // ランダムなユーザー名を生成
+        $post->avatar = RandomGenerator::getRandomAvatar();   // ランダムなアバターを生成
         $post->expires_at = now()->addSeconds(60); // 60秒後に期限切れ
         $post->save();
 
