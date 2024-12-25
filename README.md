@@ -1,4 +1,5 @@
-<p align="center"><a href="https://tkgeek.sakura.ne.jp/felizo/" target="_blank"><img src="https://tkgeek.sakura.ne.jp/felizo/public/felizo.jpg" width="400" alt="Felizo"></a></p>
+<p align="center"><a href="https://tkgeek.sakura.ne.jp/felizo/" target="_blank"><img src="https://private-user-images.githubusercontent.com/184947330/398591824-55884c75-540b-4d26-8f7a-3af964eee5d1.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUxNDg1NzMsIm5iZiI6MTczNTE0ODI3MywicGF0aCI6Ii8xODQ5NDczMzAvMzk4NTkxODI0LTU1ODg0Yzc1LTU0MGItNGQyNi04ZjdhLTNhZjk2NGVlZTVkMS5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNVQxNzM3NTNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lOWI5YzQwOTYyOTViNTU3ZWUwNjFlMDY1NDA3NjgxOTVmOWY1ZGFlNTQ2YzRlYzczNzg2NGVhMjQ5ZmYxMDJjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.gf4MeszC_sqYTxyQxYdxrulZJfDwvB3aAWwc57TJIRg" width="400" alt="Felizo"></a></p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/HTML5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
   <img src="https://img.shields.io/badge/CSS3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS">
@@ -33,6 +34,7 @@ https://tkgeek.sakura.ne.jp/felizo/
 ### ④アプリのログイン用IDまたはPassword
 
 ### ⑤工夫した点・こだわった点
+- モダンでスタイリッシュなデザインとUI/UX
 - コメント投稿はスレッド内で投稿できる（別ビューへ飛ばない）UI設計
 - ポップなスタンプと、多様なプロフィールアイコン
 - PerspectiveAPIによる投稿内容の有害度のチェック
