@@ -49,3 +49,6 @@ https://tkgeek.sakura.ne.jp/felizo/
 ### ⑦フリー項目
 - チームメンバー全員が初心者で、全員がゼロベースでした。そのため初期から、一般的な作業の仕方を確認しながら進めました。我々のチームはスタート時の環境最適化が良かったと思います。作業手順の明文化（projectのReadMEに記載）、リポジトリ作成と同時にdevをさくらサーバーに自動デプロイ化（GitHub ActionsでCI/CD）、議事録やメモの残し方の共有、など。
 - 細かくタスクを分けCI/CDを回していたため、commit数、プルリク数、Actions Usage、issue数が多めです。
+
+## Powered by
+<p align="center"><a href="https://tkgeek.sakura.ne.jp/felizo/" target="_blank"><img src="https://private-user-images.githubusercontent.com/184947330/398592014-9e7e75e9-95bb-44e5-9eee-b3b619e32695.jpeg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUxNDg4MDYsIm5iZiI6MTczNTE0ODUwNiwicGF0aCI6Ii8xODQ5NDczMzAvMzk4NTkyMDE0LTllN2U3NWU5LTk1YmItNDRlNS05ZWVlLWIzYjYxOWUzMjY5NS5qcGVnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MTIyNSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDEyMjVUMTc0MTQ2WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NzQ2ZmNlMmNjYmE0ZWQxMGNkOWJlZWY2MzU3ODdhYjMzNDc0YTBiN2YzOGEwMWUzZWIyNDNjZmM4Mzg2NTY2NSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.M1psPc_hBvN3JdfgVyG-Z4vGYoeLhkyRPwjUZgen8Ic" width="400" alt="teamC"></a></p>
