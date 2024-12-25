@@ -27,3 +27,6 @@ Route::post('/threads/{thread}/posts', [PostController::class, 'store'])->name('
 
 //🐶検索機能のため追加
 Route::get('/search', [ThreadController::class, 'search'])->name('threads.search');
+
+// 🐶スタンプ機能のため追加
+Route::post('/stamps/{type}/{id}', [StampController::class, 'store'])->name('stamps.store');
