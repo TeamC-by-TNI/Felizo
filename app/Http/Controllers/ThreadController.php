@@ -39,9 +39,19 @@ class ThreadController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // 🐶ランダムなユーザー名とアバターを追加
-        $validated['username'] = RandomGenerator::generateUsername();
-        $validated['avatar'] = RandomGenerator::getRandomAvatar();
+        // 🐶ランダムなユーザー名とアバター + デバッグ出力追加
+        // エラーが発生する場合は、storage/logs/laravel.logでエラーメッセージを確認
+        try {
+            $username = RandomGenerator::generateUsername();
+            $avatar = RandomGenerator::getRandomAvatar();
+            \Log::info('Generated username: ' . $username);
+            \Log::info('Generated avatar: ' . $avatar);
+            
+            $validated['username'] = $username;
+            $validated['avatar'] = $avatar;
+        } catch (\Exception $e) {
+            \Log::error('Error in RandomGenerator: ' . $e->getMessage());
+        }
 
         // 新しいスレッドを保存
         $thread = Thread::create($validated);
