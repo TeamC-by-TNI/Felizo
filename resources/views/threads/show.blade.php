@@ -181,50 +181,52 @@
     let toxicityValid = true;
 
     function checkToxicity(text) {
-        console.log('checkToxicity関数が呼び出されました');
-        console.log('入力テキスト:', text);
+        // console.log('checkToxicity関数が呼び出されました');
+        // console.log('入力テキスト:', text);
         
-        if (!text.trim()) {
-            console.log('テキストが空のため、チェックをスキップします');
-            return;
-        }
+        // if (!text.trim()) {
+        //     console.log('テキストが空のため、チェックをスキップします');
+        //     return;
+        // }
 
-        const url = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${apiKey}`;
-        const data = {
-            comment: { text: text },
-            requestedAttributes: { TOXICITY: {} }
-        };
+        // const url = `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${apiKey}`;
+        // const data = {
+        //     comment: { text: text },
+        //     requestedAttributes: { TOXICITY: {} }
+        // };
         
-        console.log('APIリクエスト先URL:', url);
-        console.log('送信データ:', data);
+        // console.log('APIリクエスト先URL:', url);
+        // console.log('送信データ:', data);
 
-        $.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(response) {
-                console.log('API応答:', response);
-                const toxicity = response.attributeScores.TOXICITY.summaryScore.value;
-                const toxicityPercentage = (toxicity * 100).toFixed(2);
+        // $.ajax({
+        //     url: url,
+        //     type: 'POST',
+        //     contentType: 'application/json',
+        //     data: JSON.stringify(data),
+        //     success: function(response) {
+        //         console.log('API応答:', response);
+        //         const toxicity = response.attributeScores.TOXICITY.summaryScore.value;
+        //         const toxicityPercentage = (toxicity * 100).toFixed(2);
 
-                if (toxicity > 0.04) {
-                    $('#toxicity-result').text(`有害な内容を ${toxicityPercentage}% 含んでいるため投稿できません。`);
-                    toxicityValid = false;
-                } else {
-                    $('#toxicity-result').text('');
-                    toxicityValid = true;
-                }
-                updateButtonState();
-            },
-            error: function(xhr, status, error) {
-                console.error('APIエラー:', error);
-                console.error('エラーの詳細:', xhr.responseText);
-                $('#toxicity-result').text('有害度チェックでエラーが発生しました。');
-                toxicityValid = false;
-                updateButtonState();
-            }
-        });
+        //         if (toxicity > 0.04) {
+        //             $('#toxicity-result').text(`有害な内容を ${toxicityPercentage}% 含んでいるため投稿できません。`);
+        //             toxicityValid = false;
+        //         } else {
+        //             $('#toxicity-result').text('');
+        //             toxicityValid = true;
+        //         }
+        //         updateButtonState();
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error('APIエラー:', error);
+        //         console.error('エラーの詳細:', xhr.responseText);
+        //         $('#toxicity-result').text('有害度チェックでエラーが発生しました。');
+        //         toxicityValid = false;
+        //         updateButtonState();
+        //     }
+        // });
+        // 何もチェックせずにtrueを維持
+    return;
     }
 
     function updateButtonState() {
